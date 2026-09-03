@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from uuid import UUID
+from uuid import UUID, uuid4
 
 from ..auth import AsyncAuthSchemes, AuthSchemes
 from ..core import (
@@ -350,6 +350,7 @@ class OrdersWithRawResponse(SecuredRawResponse[RawClient, Server, AuthSchemes]):
         return self._client.execute(
             http_method="DELETE",
             url_template=self._server.default("/v2/orders"),
+            headers=[param[UUID]("Idempotency-Key", uuid4())],
             auth_scheme=AllSchemes(self._auth.api_key, self._auth.api_secret),
             decoder=json_decoder[list[CanceledOrderResponse]],
             error_mapper=delete_all_orders_error_mapper,
@@ -372,6 +373,7 @@ class OrdersWithRawResponse(SecuredRawResponse[RawClient, Server, AuthSchemes]):
             http_method="DELETE",
             url_template=self._server.default("/v2/orders/{order_id}"),
             path_params=[param[UUID]("order_id", order_id)],
+            headers=[param[UUID]("Idempotency-Key", uuid4())],
             auth_scheme=AllSchemes(self._auth.api_key, self._auth.api_secret),
             decoder=empty_response,
             error_mapper=delete_order_by_order_id_error_mapper,
@@ -476,6 +478,7 @@ class OrdersWithRawResponse(SecuredRawResponse[RawClient, Server, AuthSchemes]):
             http_method="PATCH",
             url_template=self._server.default("/v2/orders/{order_id}"),
             path_params=[param[UUID]("order_id", order_id)],
+            headers=[param[UUID]("Idempotency-Key", uuid4())],
             body=json_body[PatchOrderRequest | PatchOrderRequestDict](body),
             auth_scheme=AllSchemes(self._auth.api_key, self._auth.api_secret),
             decoder=json_decoder[Order],
@@ -498,6 +501,7 @@ class OrdersWithRawResponse(SecuredRawResponse[RawClient, Server, AuthSchemes]):
         return self._client.execute(
             http_method="POST",
             url_template=self._server.default("/v2/orders"),
+            headers=[param[UUID]("Idempotency-Key", uuid4())],
             body=json_body[Order | OrderDict](body),
             auth_scheme=AllSchemes(self._auth.api_key, self._auth.api_secret),
             decoder=json_decoder[Order],
@@ -521,6 +525,7 @@ class AsyncOrdersWithRawResponse(SecuredRawResponse[AsyncRawClient, Server, Asyn
         return await self._client.execute(
             http_method="DELETE",
             url_template=self._server.default("/v2/orders"),
+            headers=[param[UUID]("Idempotency-Key", uuid4())],
             auth_scheme=AsyncAllSchemes(self._auth.api_key, self._auth.api_secret),
             decoder=json_decoder[list[CanceledOrderResponse]],
             error_mapper=delete_all_orders_error_mapper,
@@ -543,6 +548,7 @@ class AsyncOrdersWithRawResponse(SecuredRawResponse[AsyncRawClient, Server, Asyn
             http_method="DELETE",
             url_template=self._server.default("/v2/orders/{order_id}"),
             path_params=[param[UUID]("order_id", order_id)],
+            headers=[param[UUID]("Idempotency-Key", uuid4())],
             auth_scheme=AsyncAllSchemes(self._auth.api_key, self._auth.api_secret),
             decoder=empty_response,
             error_mapper=delete_order_by_order_id_error_mapper,
@@ -647,6 +653,7 @@ class AsyncOrdersWithRawResponse(SecuredRawResponse[AsyncRawClient, Server, Asyn
             http_method="PATCH",
             url_template=self._server.default("/v2/orders/{order_id}"),
             path_params=[param[UUID]("order_id", order_id)],
+            headers=[param[UUID]("Idempotency-Key", uuid4())],
             body=json_body[PatchOrderRequest | PatchOrderRequestDict](body),
             auth_scheme=AsyncAllSchemes(self._auth.api_key, self._auth.api_secret),
             decoder=json_decoder[Order],
@@ -669,6 +676,7 @@ class AsyncOrdersWithRawResponse(SecuredRawResponse[AsyncRawClient, Server, Asyn
         return await self._client.execute(
             http_method="POST",
             url_template=self._server.default("/v2/orders"),
+            headers=[param[UUID]("Idempotency-Key", uuid4())],
             body=json_body[Order | OrderDict](body),
             auth_scheme=AsyncAllSchemes(self._auth.api_key, self._auth.api_secret),
             decoder=json_decoder[Order],

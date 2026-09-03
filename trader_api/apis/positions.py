@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from uuid import UUID, uuid4
+
 from ..auth import AsyncAuthSchemes, AuthSchemes
 from ..core import (
     AllSchemes,
@@ -226,6 +228,7 @@ class PositionsWithRawResponse(SecuredRawResponse[RawClient, Server, AuthSchemes
             http_method="DELETE",
             url_template=self._server.default("/v2/positions"),
             query_params=[param[bool | None]("cancel_orders", cancel_orders)],
+            headers=[param[UUID]("Idempotency-Key", uuid4())],
             auth_scheme=AllSchemes(self._auth.api_key, self._auth.api_secret),
             decoder=json_decoder[list[PositionClosedReponse]],
             error_mapper=delete_all_open_positions_error_mapper,
@@ -257,6 +260,7 @@ class PositionsWithRawResponse(SecuredRawResponse[RawClient, Server, AuthSchemes
             url_template=self._server.default("/v2/positions/{symbol_or_asset_id}"),
             path_params=[param[str]("symbol_or_asset_id", symbol_or_asset_id)],
             query_params=[param[float | None]("qty", qty), param[float | None]("percentage", percentage)],
+            headers=[param[UUID]("Idempotency-Key", uuid4())],
             auth_scheme=AllSchemes(self._auth.api_key, self._auth.api_secret),
             decoder=json_decoder[Order],
             error_mapper=raw_error_response,
@@ -326,6 +330,7 @@ class AsyncPositionsWithRawResponse(SecuredRawResponse[AsyncRawClient, Server, A
             http_method="DELETE",
             url_template=self._server.default("/v2/positions"),
             query_params=[param[bool | None]("cancel_orders", cancel_orders)],
+            headers=[param[UUID]("Idempotency-Key", uuid4())],
             auth_scheme=AsyncAllSchemes(self._auth.api_key, self._auth.api_secret),
             decoder=json_decoder[list[PositionClosedReponse]],
             error_mapper=delete_all_open_positions_error_mapper,
@@ -357,6 +362,7 @@ class AsyncPositionsWithRawResponse(SecuredRawResponse[AsyncRawClient, Server, A
             url_template=self._server.default("/v2/positions/{symbol_or_asset_id}"),
             path_params=[param[str]("symbol_or_asset_id", symbol_or_asset_id)],
             query_params=[param[float | None]("qty", qty), param[float | None]("percentage", percentage)],
+            headers=[param[UUID]("Idempotency-Key", uuid4())],
             auth_scheme=AsyncAllSchemes(self._auth.api_key, self._auth.api_secret),
             decoder=json_decoder[Order],
             error_mapper=raw_error_response,

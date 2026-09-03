@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from uuid import UUID, uuid4
+
 from ..auth import AsyncAuthSchemes, AuthSchemes
 from ..core import (
     AllSchemes,
@@ -12,6 +14,7 @@ from ..core import (
     SecuredRawResponse,
     json_body,
     json_decoder,
+    param,
     raw_error_response,
 )
 from ..models.account_configurations import AccountConfigurations, AccountConfigurationsDict
@@ -137,6 +140,7 @@ class AccountConfigurationsApiWithRawResponse(SecuredRawResponse[RawClient, Serv
         return self._client.execute(
             http_method="PATCH",
             url_template=self._server.default("/v2/account/configurations"),
+            headers=[param[UUID]("Idempotency-Key", uuid4())],
             body=json_body[AccountConfigurations | AccountConfigurationsDict | None](body),
             auth_scheme=AllSchemes(self._auth.api_key, self._auth.api_secret),
             decoder=json_decoder[AccountConfigurations],
@@ -182,6 +186,7 @@ class AsyncAccountConfigurationsApiWithRawResponse(SecuredRawResponse[AsyncRawCl
         return await self._client.execute(
             http_method="PATCH",
             url_template=self._server.default("/v2/account/configurations"),
+            headers=[param[UUID]("Idempotency-Key", uuid4())],
             body=json_body[AccountConfigurations | AccountConfigurationsDict | None](body),
             auth_scheme=AsyncAllSchemes(self._auth.api_key, self._auth.api_secret),
             decoder=json_decoder[AccountConfigurations],

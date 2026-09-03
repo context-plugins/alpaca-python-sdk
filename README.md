@@ -1,8 +1,8 @@
-# Alpaca SDK
+# Trader API SDK
 
 [![Built with APIMatic][apimatic-badge]][apimatic-url] [![License: MIT][license-badge]][license-url] [![Python 3.10+][python-badge]][python-url]
 
-The Alpaca SDK for Python provides access to the Alpaca REST APIs from Python applications.
+The Trader API SDK for Python provides access to the Trader API REST APIs from Python applications.
 
 > [!TIP]
 > **Looking for a specific signature, model, enum, or error type?** This SDK ships a generated
@@ -20,15 +20,15 @@ For complete documentation on the Trading API and to obtain your keys head to ht
 Install the Python SDK from PyPI, with whichever package manager your project uses:
 
 ```bash
-pip install alpaca
+pip install trader-api
 ```
 
 ```bash
-uv add alpaca
+uv add trader-api
 ```
 
 ```bash
-poetry add alpaca
+poetry add trader-api
 ```
 
 ---
@@ -37,36 +37,36 @@ poetry add alpaca
 
 ### Synchronous client
 
-Construct `AlpacaClient` with keyword arguments, and call `close()` when you are done. Every argument is optional; the full list is in the [SDK map](sdk-map.md).
+Construct `TraderApiClient` with keyword arguments, and call `close()` when you are done. Every argument is optional; the full list is in the [SDK map](sdk-map.md).
 
 ```python
-from alpaca import AlpacaClient
+from trader_api import TraderApiClient
 
-client = AlpacaClient(api_key="YOUR_API_KEY", api_secret="YOUR_API_KEY", environment="paper")
+client = TraderApiClient(api_key="YOUR_API_KEY", api_secret="YOUR_API_KEY", environment="paper")
 
 # TODO: call endpoints here -- see api-reference.md
 
 client.close()
 ```
 
-Alternatively, scope it -- `with AlpacaClient(...) as client:` closes the pool on exit; see [Best Practices](#best-practices).
+Alternatively, scope it -- `with TraderApiClient(...) as client:` closes the pool on exit; see [Best Practices](#best-practices).
 
-`Client` is exported as an alias of `AlpacaClient`, so `from alpaca import Client` also works.
+`Client` is exported as an alias of `TraderApiClient`, so `from trader_api import Client` also works.
 
 The SDK accepts every model-typed input in two interchangeable spellings, both type-checked: the typed model, or a plain dict with the same keys -- the `OrDict` and `Model | ModelDict` unions in the [SDK map](sdk-map.md). Pick whichever suits the call site: the dict form needs no import, while the model form adds a keyword-checked constructor and editor completion.
 
 ### Asynchronous client
 
-`AsyncAlpacaClient` mirrors `AlpacaClient` with **identical method names**, and every endpoint method is a coroutine. It takes the same arguments, with some differences -- for example, the transport argument is `custom_async_http_client`.
+`AsyncTraderApiClient` mirrors `TraderApiClient` with **identical method names**, and every endpoint method is a coroutine. It takes the same arguments, with some differences -- for example, the transport argument is `custom_async_http_client`.
 
 ```python
 from asyncio import run
 
-from alpaca import AsyncAlpacaClient
+from trader_api import AsyncTraderApiClient
 
 
 async def main() -> None:
-    client = AsyncAlpacaClient(api_key="YOUR_API_KEY", api_secret="YOUR_API_KEY", environment="paper")
+    client = AsyncTraderApiClient(api_key="YOUR_API_KEY", api_secret="YOUR_API_KEY", environment="paper")
     # TODO: call endpoints here, awaiting each -- see api-reference.md
     await client.aclose()
 
@@ -74,7 +74,7 @@ async def main() -> None:
 run(main())
 ```
 
-Alternatively, scope it -- `async with AsyncAlpacaClient(...) as client:` closes the pool on exit. Only the async spelling is `aclose`, matching httpx; see [Best Practices](#best-practices).
+Alternatively, scope it -- `async with AsyncTraderApiClient(...) as client:` closes the pool on exit. Only the async spelling is `aclose`, matching httpx; see [Best Practices](#best-practices).
 
 `AsyncClient` is the exported alias. Each client accepts **only** its own transport argument; passing the other's is a `TypeError` at runtime and an error under mypy.
 
@@ -100,11 +100,11 @@ Consult the map before scanning or grepping the source: it answers call-level co
 ## Best Practices
 
 > [!TIP]
-> Use a **single `AlpacaClient` instance** for the lifetime of your application and reuse it across
+> Use a **single `TraderApiClient` instance** for the lifetime of your application and reuse it across
 > all requests. Each instance owns its own connection pool, so an instance per request forfeits
 > connection reuse and leaks pools that are never closed.
 
-Match the disposal to the client's lifetime: an application-lifetime client is closed once at shutdown with `close()` / `aclose()`; where the lifetime fits a block, `with AlpacaClient() as client:` / `async with AsyncAlpacaClient() as client:` releases it automatically. Both are idempotent, but a closed client is not reusable: the next call raises. The client closes **whatever transport it holds**, including one you supplied via `custom_http_client` / `custom_async_http_client`; if you intend to reuse your own transport across clients, don't hand its lifetime to a `with` block.
+Match the disposal to the client's lifetime: an application-lifetime client is closed once at shutdown with `close()` / `aclose()`; where the lifetime fits a block, `with TraderApiClient() as client:` / `async with AsyncTraderApiClient() as client:` releases it automatically. Both are idempotent, but a closed client is not reusable: the next call raises. The client closes **whatever transport it holds**, including one you supplied via `custom_http_client` / `custom_async_http_client`; if you intend to reuse your own transport across clients, don't hand its lifetime to a `with` block.
 
 ## License
 

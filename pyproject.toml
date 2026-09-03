@@ -1,5 +1,5 @@
 [project]
-name = "alpaca"
+name = "trader-api"
 version = "2.0.0"
 description = "Alpaca's Trading API is a modern platform for algorithmic trading.\n\nFor complete documentation on the Trading API and to obtain your keys head to https://alpaca.markets/docs/api-documentation/api-v2/. Once you have your keys, head to the environments tab to quickly get started."
 authors = [
@@ -81,7 +81,7 @@ ignore = [
 
 [tool.mypy]
 python_version = "3.10"         # the supported floor, not whichever interpreter is local
-files = ["alpaca"]
+files = ["trader_api"]
 strict = true
 warn_unreachable = true
 enable_error_code = ["redundant-expr", "truthy-bool", "ignore-without-code", "possibly-undefined"]

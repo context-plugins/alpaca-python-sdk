@@ -15,12 +15,21 @@ from .apis.portfolio_history_api import AsyncPortfolioHistoryApi
 from .apis.positions import AsyncPositions
 from .apis.watchlists import AsyncWatchlists
 from .auth import AsyncAuthSchemes
-from .base_client import DEFAULT_TIMEOUT, BaseAlpacaClient
-from .core import ApiKeyHeaderScheme, AsyncHttpClient, AsyncHttpxClient, AsyncRawClient, no_auth
+from .base_client import DEFAULT_TIMEOUT, BaseTraderApiClient
+from .core import (
+    OPERATING_SYSTEM,
+    PYTHON_RUNTIME,
+    ApiKeyHeaderScheme,
+    AsyncHttpClient,
+    AsyncHttpxClient,
+    AsyncRawClient,
+    no_auth,
+    param,
+)
 from .server.environment import Environment
 
 
-class AsyncAlpacaClient(BaseAlpacaClient[AsyncRawClient]):
+class AsyncTraderApiClient(BaseTraderApiClient[AsyncRawClient]):
     def __init__(
         self,
         *,
@@ -36,6 +45,14 @@ class AsyncAlpacaClient(BaseAlpacaClient[AsyncRawClient]):
             http_client=(
                 custom_async_http_client if custom_async_http_client is not None else AsyncHttpxClient(timeout=timeout)
             ),
+            global_headers=[
+                param[str]("User-Agent", "TraderApiClient/2.0.0 Python"),
+                param[str]("X-APIMatic-Lang", "Python"),
+                param[str]("X-APIMatic-Package-Version", "2.0.0"),
+                param[str]("X-APIMatic-Gen-Version", "4.0.0"),
+                param[str]("X-APIMatic-OS", OPERATING_SYSTEM),
+                param[str]("X-APIMatic-Runtime", PYTHON_RUNTIME),
+            ],
         )
         self._auth = AsyncAuthSchemes(
             api_key=ApiKeyHeaderScheme("APCA-API-KEY-ID", api_key) if api_key is not None else no_auth,
@@ -90,4 +107,4 @@ class AsyncAlpacaClient(BaseAlpacaClient[AsyncRawClient]):
         await self.aclose()
 
 
-AsyncClient = AsyncAlpacaClient
+AsyncClient = AsyncTraderApiClient

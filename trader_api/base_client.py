@@ -10,7 +10,7 @@ from .server.server_config import LiveConfig, PaperConfig, ServerConfig
 DEFAULT_TIMEOUT = 30.0
 
 
-class BaseAlpacaClient(Generic[RawClientT]):
+class BaseTraderApiClient(Generic[RawClientT]):
     _raw_client: RawClientT
 
     def __init__(

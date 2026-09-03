@@ -15,12 +15,21 @@ from .apis.portfolio_history_api import PortfolioHistoryApi
 from .apis.positions import Positions
 from .apis.watchlists import Watchlists
 from .auth import AuthSchemes
-from .base_client import DEFAULT_TIMEOUT, BaseAlpacaClient
-from .core import ApiKeyHeaderScheme, HttpClient, HttpxClient, RawClient, no_auth
+from .base_client import DEFAULT_TIMEOUT, BaseTraderApiClient
+from .core import (
+    OPERATING_SYSTEM,
+    PYTHON_RUNTIME,
+    ApiKeyHeaderScheme,
+    HttpClient,
+    HttpxClient,
+    RawClient,
+    no_auth,
+    param,
+)
 from .server.environment import Environment
 
 
-class AlpacaClient(BaseAlpacaClient[RawClient]):
+class TraderApiClient(BaseTraderApiClient[RawClient]):
     def __init__(
         self,
         *,
@@ -33,7 +42,15 @@ class AlpacaClient(BaseAlpacaClient[RawClient]):
     ) -> None:
         super().__init__(environment=environment, base_url=base_url, timeout=timeout)
         self._raw_client = RawClient(
-            http_client=custom_http_client if custom_http_client is not None else HttpxClient(timeout=timeout)
+            http_client=custom_http_client if custom_http_client is not None else HttpxClient(timeout=timeout),
+            global_headers=[
+                param[str]("User-Agent", "TraderApiClient/2.0.0 Python"),
+                param[str]("X-APIMatic-Lang", "Python"),
+                param[str]("X-APIMatic-Package-Version", "2.0.0"),
+                param[str]("X-APIMatic-Gen-Version", "4.0.0"),
+                param[str]("X-APIMatic-OS", OPERATING_SYSTEM),
+                param[str]("X-APIMatic-Runtime", PYTHON_RUNTIME),
+            ],
         )
         self._auth = AuthSchemes(
             api_key=ApiKeyHeaderScheme("APCA-API-KEY-ID", api_key) if api_key is not None else no_auth,
@@ -88,4 +105,4 @@ class AlpacaClient(BaseAlpacaClient[RawClient]):
         self.close()
 
 
-Client = AlpacaClient
+Client = TraderApiClient
