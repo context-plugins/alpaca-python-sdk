@@ -2,7 +2,7 @@
 
 # Watchlists — operations
 
-Accessor: `client.watchlists` · Source: `trader_api/apis/watchlists.py` · 11 operations
+Accessor: `client.watchlists` · Source: `alpaca/apis/watchlists.py` · 11 operations
 
 Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omit what its invariants table covers and are otherwise self-contained, so chunk at block level. Signatures are the sync parsed spelling; the async and raw spellings take the same parameters (see sdk-map.md). **Type sources** names the module declaring each type an operation mentions, so resolving a body, return or error payload is a lookup rather than a search; the runtime types `RawError` and `ApiResult` are excluded, and an operation with no table mentions nothing but builtins and those.
 
@@ -19,9 +19,9 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `AddAssetToWatchlistRequest` | `trader_api/models/add_asset_to_watchlist_request.py` |
-| `AddAssetToWatchlistRequestDict` | `trader_api/models/add_asset_to_watchlist_request.py` |
-| `Watchlist` | `trader_api/models/watchlist.py` |
+| `AddAssetToWatchlistRequest` | `alpaca/models/add_asset_to_watchlist_request.py` |
+| `AddAssetToWatchlistRequestDict` | `alpaca/models/add_asset_to_watchlist_request.py` |
+| `Watchlist` | `alpaca/models/watchlist.py` |
 
 ### client.watchlists.add_asset_to_watchlist_by_name
 
@@ -36,9 +36,9 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `AddAssetToWatchlistRequest` | `trader_api/models/add_asset_to_watchlist_request.py` |
-| `AddAssetToWatchlistRequestDict` | `trader_api/models/add_asset_to_watchlist_request.py` |
-| `Watchlist` | `trader_api/models/watchlist.py` |
+| `AddAssetToWatchlistRequest` | `alpaca/models/add_asset_to_watchlist_request.py` |
+| `AddAssetToWatchlistRequestDict` | `alpaca/models/add_asset_to_watchlist_request.py` |
+| `Watchlist` | `alpaca/models/watchlist.py` |
 
 ### client.watchlists.delete_watchlist_by_id
 
@@ -75,7 +75,7 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `Watchlist` | `trader_api/models/watchlist.py` |
+| `Watchlist` | `alpaca/models/watchlist.py` |
 
 ### client.watchlists.get_watchlist_by_name
 
@@ -90,7 +90,7 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `Watchlist` | `trader_api/models/watchlist.py` |
+| `Watchlist` | `alpaca/models/watchlist.py` |
 
 ### client.watchlists.get_watchlists
 
@@ -103,7 +103,7 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `Watchlist` | `trader_api/models/watchlist.py` |
+| `Watchlist` | `alpaca/models/watchlist.py` |
 
 ### client.watchlists.post_watchlist
 
@@ -118,9 +118,9 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `PostWatchlistRequest` | `trader_api/models/post_watchlist_request.py` |
-| `PostWatchlistRequestDict` | `trader_api/models/post_watchlist_request.py` |
-| `Watchlist` | `trader_api/models/watchlist.py` |
+| `PostWatchlistRequest` | `alpaca/models/post_watchlist_request.py` |
+| `PostWatchlistRequestDict` | `alpaca/models/post_watchlist_request.py` |
+| `Watchlist` | `alpaca/models/watchlist.py` |
 
 ### client.watchlists.remove_asset_from_watchlist
 
@@ -135,7 +135,7 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `Watchlist` | `trader_api/models/watchlist.py` |
+| `Watchlist` | `alpaca/models/watchlist.py` |
 
 ### client.watchlists.update_watchlist_by_id
 
@@ -150,9 +150,9 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `PostWatchlistRequest` | `trader_api/models/post_watchlist_request.py` |
-| `PostWatchlistRequestDict` | `trader_api/models/post_watchlist_request.py` |
-| `Watchlist` | `trader_api/models/watchlist.py` |
+| `PostWatchlistRequest` | `alpaca/models/post_watchlist_request.py` |
+| `PostWatchlistRequestDict` | `alpaca/models/post_watchlist_request.py` |
+| `Watchlist` | `alpaca/models/watchlist.py` |
 
 ### client.watchlists.update_watchlist_by_name
 
@@ -167,7 +167,7 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `PostWatchlistRequest` | `trader_api/models/post_watchlist_request.py` |
-| `PostWatchlistRequestDict` | `trader_api/models/post_watchlist_request.py` |
-| `Watchlist` | `trader_api/models/watchlist.py` |
+| `PostWatchlistRequest` | `alpaca/models/post_watchlist_request.py` |
+| `PostWatchlistRequestDict` | `alpaca/models/post_watchlist_request.py` |
+| `Watchlist` | `alpaca/models/watchlist.py` |
 

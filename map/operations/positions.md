@@ -2,7 +2,7 @@
 
 # Positions — operations
 
-Accessor: `client.positions` · Source: `trader_api/apis/positions.py` · 4 operations
+Accessor: `client.positions` · Source: `alpaca/apis/positions.py` · 4 operations
 
 Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omit what its invariants table covers and are otherwise self-contained, so chunk at block level. Signatures are the sync parsed spelling; the async and raw spellings take the same parameters (see sdk-map.md). **Type sources** names the module declaring each type an operation mentions, so resolving a body, return or error payload is a lookup rather than a search; the runtime types `RawError` and `ApiResult` are excluded.
 
@@ -19,8 +19,8 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `PositionClosedReponse` | `trader_api/models/position_closed_reponse.py` |
-| `DeleteAllOpenPositionsErrorBody` | `trader_api/errors/delete_all_open_positions_error.py` |
+| `PositionClosedReponse` | `alpaca/models/position_closed_reponse.py` |
+| `DeleteAllOpenPositionsErrorBody` | `alpaca/errors/delete_all_open_positions_error.py` |
 
 ### client.positions.delete_open_position
 
@@ -35,7 +35,7 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `Order` | `trader_api/models/order.py` |
+| `Order` | `alpaca/models/order.py` |
 
 ### client.positions.get_all_open_positions
 
@@ -48,7 +48,7 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `Position` | `trader_api/models/position.py` |
+| `Position` | `alpaca/models/position.py` |
 
 ### client.positions.get_open_position
 
@@ -63,5 +63,5 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `Position` | `trader_api/models/position.py` |
+| `Position` | `alpaca/models/position.py` |
 

@@ -1,8 +1,8 @@
-# Trader API SDK
+# Alpaca SDK
 
 [![Built with APIMatic][apimatic-badge]][apimatic-url] [![License: MIT][license-badge]][license-url] [![Python 3.10+][python-badge]][python-url]
 
-The Trader API SDK for Python provides access to the Trader API REST APIs from Python applications.
+The Alpaca SDK for Python provides access to the Alpaca REST APIs from Python applications.
 
 > [!TIP]
 > **Looking for a specific signature, model, enum, or error type?** This SDK ships a generated
@@ -17,18 +17,18 @@ For complete documentation on the Trading API and to obtain your keys head to ht
 
 ## Installation
 
-Install the Python SDK from PyPI, with whichever package manager your project uses:
+Add the Python SDK to your project from its folder, with whichever package manager your project uses. Give each tool a path containing a slash, such as `../alpaca` — a bare folder name is looked up on PyPI instead, and resolves to whatever project holds that name there:
 
 ```bash
-pip install trader-api
+pip install <path-to-sdk>
 ```
 
 ```bash
-uv add trader-api
+uv add <path-to-sdk>
 ```
 
 ```bash
-poetry add trader-api
+poetry add <path-to-sdk>
 ```
 
 ---
@@ -37,36 +37,36 @@ poetry add trader-api
 
 ### Synchronous client
 
-Construct `TraderApiClient` with keyword arguments, and call `close()` when you are done. Every argument is optional; the full list is in the [SDK map](sdk-map.md).
+Construct `AlpacaClient` with keyword arguments, and call `close()` when you are done. Every argument is optional; the full list is in the [SDK map](sdk-map.md).
 
 ```python
-from trader_api import TraderApiClient
+from alpaca import AlpacaClient
 
-client = TraderApiClient(api_key="YOUR_API_KEY", api_secret="YOUR_API_KEY", environment="paper")
+client = AlpacaClient(api_key="YOUR_API_KEY", api_secret="YOUR_API_KEY", environment="paper")
 
 # TODO: call endpoints here -- see api-reference.md
 
 client.close()
 ```
 
-Alternatively, scope it -- `with TraderApiClient(...) as client:` closes the pool on exit; see [Best Practices](#best-practices).
+Alternatively, scope it -- `with AlpacaClient(...) as client:` closes the pool on exit; see [Best Practices](#best-practices).
 
-`Client` is exported as an alias of `TraderApiClient`, so `from trader_api import Client` also works.
+`Client` is exported as an alias of `AlpacaClient`, so `from alpaca import Client` also works.
 
 The SDK accepts every model-typed input in two interchangeable spellings, both type-checked: the typed model, or a plain dict with the same keys -- the `OrDict` and `Model | ModelDict` unions in the [SDK map](sdk-map.md). Pick whichever suits the call site: the dict form needs no import, while the model form adds a keyword-checked constructor and editor completion.
 
 ### Asynchronous client
 
-`AsyncTraderApiClient` mirrors `TraderApiClient` with **identical method names**, and every endpoint method is a coroutine. It takes the same arguments, with some differences -- for example, the transport argument is `custom_async_http_client`.
+`AsyncAlpacaClient` mirrors `AlpacaClient` with **identical method names**, and every endpoint method is a coroutine. It takes the same arguments, with some differences -- for example, the transport argument is `custom_async_http_client`.
 
 ```python
 from asyncio import run
 
-from trader_api import AsyncTraderApiClient
+from alpaca import AsyncAlpacaClient
 
 
 async def main() -> None:
-    client = AsyncTraderApiClient(api_key="YOUR_API_KEY", api_secret="YOUR_API_KEY", environment="paper")
+    client = AsyncAlpacaClient(api_key="YOUR_API_KEY", api_secret="YOUR_API_KEY", environment="paper")
     # TODO: call endpoints here, awaiting each -- see api-reference.md
     await client.aclose()
 
@@ -74,7 +74,7 @@ async def main() -> None:
 run(main())
 ```
 
-Alternatively, scope it -- `async with AsyncTraderApiClient(...) as client:` closes the pool on exit. Only the async spelling is `aclose`, matching httpx; see [Best Practices](#best-practices).
+Alternatively, scope it -- `async with AsyncAlpacaClient(...) as client:` closes the pool on exit. Only the async spelling is `aclose`, matching httpx2; see [Best Practices](#best-practices).
 
 `AsyncClient` is the exported alias. Each client accepts **only** its own transport argument; passing the other's is a `TypeError` at runtime and an error under mypy.
 
@@ -100,11 +100,13 @@ Consult the map before scanning or grepping the source: it answers call-level co
 ## Best Practices
 
 > [!TIP]
-> Use a **single `TraderApiClient` instance** for the lifetime of your application and reuse it across
+> Use a **single `AlpacaClient` instance** for the lifetime of your application and reuse it across
 > all requests. Each instance owns its own connection pool, so an instance per request forfeits
 > connection reuse and leaks pools that are never closed.
 
-Match the disposal to the client's lifetime: an application-lifetime client is closed once at shutdown with `close()` / `aclose()`; where the lifetime fits a block, `with TraderApiClient() as client:` / `async with AsyncTraderApiClient() as client:` releases it automatically. Both are idempotent, but a closed client is not reusable: the next call raises. The client closes **whatever transport it holds**, including one you supplied via `custom_http_client` / `custom_async_http_client`; if you intend to reuse your own transport across clients, don't hand its lifetime to a `with` block.
+Match the disposal to the client's lifetime: an application-lifetime client is closed once at shutdown with `close()` / `aclose()`; where the lifetime fits a block, `with AlpacaClient() as client:` / `async with AsyncAlpacaClient() as client:` releases it automatically. Both are idempotent, but a closed client is not reusable: the next call raises. The client closes **whatever transport it holds**, including one you supplied via `custom_http_client` / `custom_async_http_client`; if you intend to reuse your own transport across clients, don't hand its lifetime to a `with` block.
+
+**Retries are on by default**: a failed idempotent request — a retryable status or no response at all — is sent again up to three times before the call gives up. Pass `retry_options=0` to turn it off, for instance in a test that stubs an error response; the policy and its defaults are under **Retries** in the SDK map.
 
 ## License
 

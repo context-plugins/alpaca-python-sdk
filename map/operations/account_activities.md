@@ -2,7 +2,7 @@
 
 # AccountActivities — operations
 
-Accessor: `client.account_activities` · Source: `trader_api/apis/account_activities.py` · 2 operations
+Accessor: `client.account_activities` · Source: `alpaca/apis/account_activities.py` · 2 operations
 
 Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omit what its invariants table covers and are otherwise self-contained, so chunk at block level. Signatures are the sync parsed spelling; the async and raw spellings take the same parameters (see sdk-map.md). **Type sources** names the module declaring each type an operation mentions, so resolving a body, return or error payload is a lookup rather than a search; the runtime types `RawError` and `ApiResult` are excluded.
 
@@ -18,8 +18,8 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `DirectionOrStr` | `trader_api/models/enums/direction.py` |
-| `V2AccountActivitiesResponse` | `trader_api/models/unions/v2_account_activities_response.py` |
+| `DirectionOrStr` | `alpaca/models/enums/direction.py` |
+| `V2AccountActivitiesResponse` | `alpaca/models/unions/v2_account_activities_response.py` |
 
 ### client.account_activities.get_account_activities_by_activity_type
 
@@ -34,6 +34,6 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `DirectionOrStr` | `trader_api/models/enums/direction.py` |
-| `V2AccountActivitiesResponse1` | `trader_api/models/unions/v2_account_activities_response1.py` |
+| `DirectionOrStr` | `alpaca/models/enums/direction.py` |
+| `V2AccountActivitiesResponse1` | `alpaca/models/unions/v2_account_activities_response1.py` |
 

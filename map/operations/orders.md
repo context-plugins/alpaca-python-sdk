@@ -2,7 +2,7 @@
 
 # Orders — operations
 
-Accessor: `client.orders` · Source: `trader_api/apis/orders.py` · 6 operations
+Accessor: `client.orders` · Source: `alpaca/apis/orders.py` · 6 operations
 
 Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omit what its invariants table covers and are otherwise self-contained, so chunk at block level. Signatures are the sync parsed spelling; the async and raw spellings take the same parameters (see sdk-map.md). **Type sources** names the module declaring each type an operation mentions, so resolving a body, return or error payload is a lookup rather than a search; the runtime types `RawError` and `ApiResult` are excluded.
 
@@ -18,8 +18,8 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `CanceledOrderResponse` | `trader_api/models/canceled_order_response.py` |
-| `DeleteAllOrdersErrorBody` | `trader_api/errors/delete_all_orders_error.py` |
+| `CanceledOrderResponse` | `alpaca/models/canceled_order_response.py` |
+| `DeleteAllOrdersErrorBody` | `alpaca/errors/delete_all_orders_error.py` |
 
 ### client.orders.delete_order_by_order_id
 
@@ -35,7 +35,7 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `DeleteOrderByOrderIdErrorBody` | `trader_api/errors/delete_order_by_order_id_error.py` |
+| `DeleteOrderByOrderIdErrorBody` | `alpaca/errors/delete_order_by_order_id_error.py` |
 
 ### client.orders.get_all_orders
 
@@ -49,9 +49,9 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `Status1OrStr` | `trader_api/models/enums/status1.py` |
-| `DirectionOrStr` | `trader_api/models/enums/direction.py` |
-| `Order` | `trader_api/models/order.py` |
+| `Status1OrStr` | `alpaca/models/enums/status1.py` |
+| `DirectionOrStr` | `alpaca/models/enums/direction.py` |
+| `Order` | `alpaca/models/order.py` |
 
 ### client.orders.get_order_by_order_id
 
@@ -66,7 +66,7 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `Order` | `trader_api/models/order.py` |
+| `Order` | `alpaca/models/order.py` |
 
 ### client.orders.patch_order_by_order_id
 
@@ -81,9 +81,9 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `PatchOrderRequest` | `trader_api/models/patch_order_request.py` |
-| `PatchOrderRequestDict` | `trader_api/models/patch_order_request.py` |
-| `Order` | `trader_api/models/order.py` |
+| `PatchOrderRequest` | `alpaca/models/patch_order_request.py` |
+| `PatchOrderRequestDict` | `alpaca/models/patch_order_request.py` |
+| `Order` | `alpaca/models/order.py` |
 
 ### client.orders.post_order
 
@@ -99,7 +99,7 @@ Each `###` block is one operation and assumes `sdk-map.md` is loaded: blocks omi
 
 | Type | Source |
 | --- | --- |
-| `Order` | `trader_api/models/order.py` |
-| `OrderDict` | `trader_api/models/order.py` |
-| `PostOrderErrorBody` | `trader_api/errors/post_order_error.py` |
+| `Order` | `alpaca/models/order.py` |
+| `OrderDict` | `alpaca/models/order.py` |
+| `PostOrderErrorBody` | `alpaca/errors/post_order_error.py` |
 
