@@ -15,6 +15,7 @@ from ..core import (
     json_decoder,
     param,
     raw_error_response,
+    unwrap,
 )
 from ..models.enums.direction import DirectionOrStr
 from ..models.unions.v2_account_activities_response import V2AccountActivitiesResponse
@@ -57,16 +58,18 @@ class AccountActivities:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.get_account_activities(
-            date=date,
-            until=until,
-            after=after,
-            direction=direction,
-            page_size=page_size,
-            page_token=page_token,
-            activity_types=activity_types,
-            request_options=request_options,
-        ).unwrap()
+        return unwrap(
+            self._with_raw_response.get_account_activities(
+                date=date,
+                until=until,
+                after=after,
+                direction=direction,
+                page_size=page_size,
+                page_token=page_token,
+                activity_types=activity_types,
+                request_options=request_options,
+            ),
+        )
 
     def get_account_activities_by_activity_type(
         self,
@@ -99,16 +102,18 @@ class AccountActivities:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.get_account_activities_by_activity_type(
-            activity_type,
-            date=date,
-            until=until,
-            after=after,
-            direction=direction,
-            page_size=page_size,
-            page_token=page_token,
-            request_options=request_options,
-        ).unwrap()
+        return unwrap(
+            self._with_raw_response.get_account_activities_by_activity_type(
+                activity_type,
+                date=date,
+                until=until,
+                after=after,
+                direction=direction,
+                page_size=page_size,
+                page_token=page_token,
+                request_options=request_options,
+            ),
+        )
 
     @property
     def with_raw_response(self) -> AccountActivitiesWithRawResponse:
@@ -150,7 +155,7 @@ class AsyncAccountActivities:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (
+        return unwrap(
             await self._with_raw_response.get_account_activities(
                 date=date,
                 until=until,
@@ -160,8 +165,8 @@ class AsyncAccountActivities:
                 page_token=page_token,
                 activity_types=activity_types,
                 request_options=request_options,
-            )
-        ).unwrap()
+            ),
+        )
 
     async def get_account_activities_by_activity_type(
         self,
@@ -194,7 +199,7 @@ class AsyncAccountActivities:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (
+        return unwrap(
             await self._with_raw_response.get_account_activities_by_activity_type(
                 activity_type,
                 date=date,
@@ -204,8 +209,8 @@ class AsyncAccountActivities:
                 page_size=page_size,
                 page_token=page_token,
                 request_options=request_options,
-            )
-        ).unwrap()
+            ),
+        )
 
     @property
     def with_raw_response(self) -> AsyncAccountActivitiesWithRawResponse:

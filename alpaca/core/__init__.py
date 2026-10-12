@@ -13,6 +13,7 @@ path for the unit tests that target it.
 
 Everything remains importable from its fully-qualified module path as well."""
 
+from ._internal.headers import find_link_target, read_header
 from .auth import (
     AllSchemes,
     AnySchemes,
@@ -156,6 +157,16 @@ from .files import (
 from .httpx2_transport import AsyncHttpx2Client, Httpx2Client
 from .models import SdkBaseModel
 from .optionality import UNSET, Optional, OptionalNullable, UnsetType
+from .pagination import (
+    async_paginate,
+    cursor_state,
+    keyset_state,
+    link_state,
+    offset_state,
+    page_state,
+    paginate,
+)
+from .paginator import AsyncPaginator, Paginator
 from .params import SerializationFormat, UrlTemplate, param
 from .raw_client import (
     AsyncRawClient,
@@ -163,7 +174,7 @@ from .raw_client import (
     RawClientT,
 )
 from .request_options import RequestOptions, RequestOptionsDict, RequestOptionsOrDict
-from .results import ApiResult, Failure, RawError, Success
+from .results import ApiResult, Failure, RawError, Success, unwrap
 from .retries import RetryOptions, RetryOptionsDict, RetryOptionsOrDict
 from .runtime_env import OPERATING_SYSTEM, PYTHON_RUNTIME
 from .servers import validate_one_of
@@ -181,8 +192,10 @@ __all__ = [
     "ApiResult",
     "Success",
     "Failure",
+    "unwrap",
     "RawError",
     "ApiError",
+    "TransportError",
     # HTTP transport
     "HttpClient",
     "AsyncHttpClient",
@@ -192,7 +205,6 @@ __all__ = [
     "AsyncHttpResponse",
     "Httpx2Client",
     "AsyncHttpx2Client",
-    "TransportError",
     # Request parameters and bodies
     "param",
     "SerializationFormat",
@@ -363,4 +375,16 @@ __all__ = [
     "PYTHON_RUNTIME",
     # Server layer
     "validate_one_of",
+    # Pagination
+    "Paginator",
+    "AsyncPaginator",
+    "paginate",
+    "async_paginate",
+    "offset_state",
+    "page_state",
+    "cursor_state",
+    "keyset_state",
+    "link_state",
+    "read_header",
+    "find_link_target",
 ]

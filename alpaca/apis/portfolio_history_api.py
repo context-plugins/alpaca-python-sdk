@@ -15,6 +15,7 @@ from ..core import (
     json_decoder,
     param,
     raw_error_response,
+    unwrap,
 )
 from ..models.portfolio_history import PortfolioHistory
 from ..server.server import Server
@@ -52,13 +53,15 @@ class PortfolioHistoryApi:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.get_account_portfolio_history(
-            period=period,
-            timeframe=timeframe,
-            date_end=date_end,
-            extended_hours=extended_hours,
-            request_options=request_options,
-        ).unwrap()
+        return unwrap(
+            self._with_raw_response.get_account_portfolio_history(
+                period=period,
+                timeframe=timeframe,
+                date_end=date_end,
+                extended_hours=extended_hours,
+                request_options=request_options,
+            ),
+        )
 
     @property
     def with_raw_response(self) -> PortfolioHistoryApiWithRawResponse:
@@ -97,15 +100,15 @@ class AsyncPortfolioHistoryApi:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (
+        return unwrap(
             await self._with_raw_response.get_account_portfolio_history(
                 period=period,
                 timeframe=timeframe,
                 date_end=date_end,
                 extended_hours=extended_hours,
                 request_options=request_options,
-            )
-        ).unwrap()
+            ),
+        )
 
     @property
     def with_raw_response(self) -> AsyncPortfolioHistoryApiWithRawResponse:

@@ -19,6 +19,9 @@ client state: ``execute`` hands it an ``on_send`` callable -- an inline lambda o
 auth per attempt so a retry re-resolves it, and sends it through the client's own transport.
 ``execute`` then shapes whichever attempt it kept.
 
+Pagination does not live here. ``pagination.paginate`` and ``async_paginate`` run that loop, calling the
+endpoint's ``execute`` once per page.
+
 The two live in one module, with no ``async_raw_client.py`` beside it, because they are a peer pair:
 the handful of ``await``s they differ by are visible on one screen, which is what keeps the sync and
 async paths from drifting apart."""

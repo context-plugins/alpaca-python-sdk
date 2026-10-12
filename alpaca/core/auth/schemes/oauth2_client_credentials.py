@@ -15,6 +15,7 @@ from ...bodies import form_body
 from ...decoding import async_json_decoder, json_decoder
 from ...params import UrlTemplate, param
 from ...raw_client import AsyncRawClient, RawClient
+from ...results import unwrap
 from ..models import (
     CredentialsPlacement,
     OAuth2Credentials,
@@ -95,14 +96,16 @@ class ClientCredentialsTokenSource(Generic[ScopeT]):
 
     def fetch(self, credentials: ClientCredentials[ScopeT]) -> OAuthToken:
         headers, client_params = self.placement(credentials.client_id, credentials.client_secret)
-        return self.client.execute(
-            http_method="POST",
-            url_template=self.token_url,
-            headers=headers,
-            body=form_body(*_token_params(credentials), *client_params),
-            decoder=json_decoder[OAuthToken],
-            error_mapper=oauth_error_response,
-        ).unwrap()
+        return unwrap(
+            self.client.execute(
+                http_method="POST",
+                url_template=self.token_url,
+                headers=headers,
+                body=form_body(*_token_params(credentials), *client_params),
+                decoder=json_decoder[OAuthToken],
+                error_mapper=oauth_error_response,
+            )
+        )
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
@@ -115,7 +118,7 @@ class AsyncClientCredentialsTokenSource(Generic[ScopeT]):
 
     async def fetch(self, credentials: ClientCredentials[ScopeT]) -> OAuthToken:
         headers, client_params = self.placement(credentials.client_id, credentials.client_secret)
-        return (
+        return unwrap(
             await self.client.execute(
                 http_method="POST",
                 url_template=self.token_url,
@@ -124,4 +127,4 @@ class AsyncClientCredentialsTokenSource(Generic[ScopeT]):
                 decoder=async_json_decoder[OAuthToken],
                 error_mapper=oauth_error_response,
             )
-        ).unwrap()
+        )

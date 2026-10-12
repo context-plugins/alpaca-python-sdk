@@ -17,6 +17,7 @@ from ..core import (
     json_decoder,
     param,
     raw_error_response,
+    unwrap,
 )
 from ..models.account_configurations import AccountConfigurations, AccountConfigurationsDict
 from ..server.server import Server
@@ -38,7 +39,7 @@ class AccountConfigurationsApi:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.get_account_config(request_options=request_options).unwrap()
+        return unwrap(self._with_raw_response.get_account_config(request_options=request_options))
 
     def patch_account_config(
         self,
@@ -58,7 +59,7 @@ class AccountConfigurationsApi:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.patch_account_config(body=body, request_options=request_options).unwrap()
+        return unwrap(self._with_raw_response.patch_account_config(body=body, request_options=request_options))
 
     @property
     def with_raw_response(self) -> AccountConfigurationsApiWithRawResponse:
@@ -81,7 +82,7 @@ class AsyncAccountConfigurationsApi:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (await self._with_raw_response.get_account_config(request_options=request_options)).unwrap()
+        return unwrap(await self._with_raw_response.get_account_config(request_options=request_options))
 
     async def patch_account_config(
         self,
@@ -101,7 +102,7 @@ class AsyncAccountConfigurationsApi:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (await self._with_raw_response.patch_account_config(body=body, request_options=request_options)).unwrap()
+        return unwrap(await self._with_raw_response.patch_account_config(body=body, request_options=request_options))
 
     @property
     def with_raw_response(self) -> AsyncAccountConfigurationsApiWithRawResponse:

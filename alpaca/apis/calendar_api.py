@@ -15,6 +15,7 @@ from ..core import (
     json_decoder,
     param,
     raw_error_response,
+    unwrap,
 )
 from ..models.calendar import Calendar
 from ..server.server import Server
@@ -44,7 +45,7 @@ class CalendarApi:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.get_calendar(start=start, end=end, request_options=request_options).unwrap()
+        return unwrap(self._with_raw_response.get_calendar(start=start, end=end, request_options=request_options))
 
     @property
     def with_raw_response(self) -> CalendarApiWithRawResponse:
@@ -75,9 +76,7 @@ class AsyncCalendarApi:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (
-            await self._with_raw_response.get_calendar(start=start, end=end, request_options=request_options)
-        ).unwrap()
+        return unwrap(await self._with_raw_response.get_calendar(start=start, end=end, request_options=request_options))
 
     @property
     def with_raw_response(self) -> AsyncCalendarApiWithRawResponse:

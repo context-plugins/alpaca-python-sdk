@@ -19,6 +19,7 @@ from ..core import (
     json_decoder,
     param,
     raw_error_response,
+    unwrap,
 )
 from ..models.add_asset_to_watchlist_request import AddAssetToWatchlistRequest, AddAssetToWatchlistRequestDict
 from ..models.post_watchlist_request import PostWatchlistRequest, PostWatchlistRequestDict
@@ -50,9 +51,9 @@ class Watchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.add_asset_to_watchlist(
-            watchlist_id, body=body, request_options=request_options
-        ).unwrap()
+        return unwrap(
+            self._with_raw_response.add_asset_to_watchlist(watchlist_id, body=body, request_options=request_options)
+        )
 
     def add_asset_to_watchlist_by_name(
         self,
@@ -74,9 +75,9 @@ class Watchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.add_asset_to_watchlist_by_name(
-            name, body=body, request_options=request_options
-        ).unwrap()
+        return unwrap(
+            self._with_raw_response.add_asset_to_watchlist_by_name(name, body=body, request_options=request_options)
+        )
 
     def delete_watchlist_by_id(
         self, watchlist_id: UUID, *, request_options: RequestOptionsOrDict | None = None
@@ -93,7 +94,7 @@ class Watchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.delete_watchlist_by_id(watchlist_id, request_options=request_options).unwrap()
+        return unwrap(self._with_raw_response.delete_watchlist_by_id(watchlist_id, request_options=request_options))
 
     def delete_watchlist_by_name(self, name: str, *, request_options: RequestOptionsOrDict | None = None) -> None:
         """Delete a watchlist. This is a permanent deletion.
@@ -108,7 +109,7 @@ class Watchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.delete_watchlist_by_name(name, request_options=request_options).unwrap()
+        return unwrap(self._with_raw_response.delete_watchlist_by_name(name, request_options=request_options))
 
     def get_watchlist_by_id(
         self, watchlist_id: UUID, *, request_options: RequestOptionsOrDict | None = None
@@ -125,7 +126,7 @@ class Watchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.get_watchlist_by_id(watchlist_id, request_options=request_options).unwrap()
+        return unwrap(self._with_raw_response.get_watchlist_by_id(watchlist_id, request_options=request_options))
 
     def get_watchlist_by_name(self, name: str, *, request_options: RequestOptionsOrDict | None = None) -> Watchlist:
         """Returns a watchlist by name
@@ -140,7 +141,7 @@ class Watchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.get_watchlist_by_name(name, request_options=request_options).unwrap()
+        return unwrap(self._with_raw_response.get_watchlist_by_name(name, request_options=request_options))
 
     def get_watchlists(self, *, request_options: RequestOptionsOrDict | None = None) -> list[Watchlist]:
         """Returns the list of watchlists registered under the account.
@@ -154,7 +155,7 @@ class Watchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.get_watchlists(request_options=request_options).unwrap()
+        return unwrap(self._with_raw_response.get_watchlists(request_options=request_options))
 
     def post_watchlist(
         self,
@@ -174,7 +175,7 @@ class Watchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.post_watchlist(body, request_options=request_options).unwrap()
+        return unwrap(self._with_raw_response.post_watchlist(body, request_options=request_options))
 
     def remove_asset_from_watchlist(
         self, watchlist_id: UUID, symbol: str, *, request_options: RequestOptionsOrDict | None = None
@@ -192,9 +193,9 @@ class Watchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.remove_asset_from_watchlist(
-            watchlist_id, symbol, request_options=request_options
-        ).unwrap()
+        return unwrap(
+            self._with_raw_response.remove_asset_from_watchlist(watchlist_id, symbol, request_options=request_options)
+        )
 
     def update_watchlist_by_id(
         self,
@@ -216,9 +217,9 @@ class Watchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.update_watchlist_by_id(
-            watchlist_id, body=body, request_options=request_options
-        ).unwrap()
+        return unwrap(
+            self._with_raw_response.update_watchlist_by_id(watchlist_id, body=body, request_options=request_options)
+        )
 
     def update_watchlist_by_name(
         self,
@@ -240,9 +241,9 @@ class Watchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.update_watchlist_by_name(
-            name, body=body, request_options=request_options
-        ).unwrap()
+        return unwrap(
+            self._with_raw_response.update_watchlist_by_name(name, body=body, request_options=request_options)
+        )
 
     @property
     def with_raw_response(self) -> WatchlistsWithRawResponse:
@@ -273,11 +274,11 @@ class AsyncWatchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (
+        return unwrap(
             await self._with_raw_response.add_asset_to_watchlist(
                 watchlist_id, body=body, request_options=request_options
-            )
-        ).unwrap()
+            ),
+        )
 
     async def add_asset_to_watchlist_by_name(
         self,
@@ -299,11 +300,11 @@ class AsyncWatchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (
+        return unwrap(
             await self._with_raw_response.add_asset_to_watchlist_by_name(
                 name, body=body, request_options=request_options
-            )
-        ).unwrap()
+            ),
+        )
 
     async def delete_watchlist_by_id(
         self, watchlist_id: UUID, *, request_options: RequestOptionsOrDict | None = None
@@ -320,9 +321,9 @@ class AsyncWatchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (
+        return unwrap(
             await self._with_raw_response.delete_watchlist_by_id(watchlist_id, request_options=request_options)
-        ).unwrap()
+        )
 
     async def delete_watchlist_by_name(self, name: str, *, request_options: RequestOptionsOrDict | None = None) -> None:
         """Delete a watchlist. This is a permanent deletion.
@@ -337,7 +338,7 @@ class AsyncWatchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (await self._with_raw_response.delete_watchlist_by_name(name, request_options=request_options)).unwrap()
+        return unwrap(await self._with_raw_response.delete_watchlist_by_name(name, request_options=request_options))
 
     async def get_watchlist_by_id(
         self, watchlist_id: UUID, *, request_options: RequestOptionsOrDict | None = None
@@ -354,9 +355,7 @@ class AsyncWatchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (
-            await self._with_raw_response.get_watchlist_by_id(watchlist_id, request_options=request_options)
-        ).unwrap()
+        return unwrap(await self._with_raw_response.get_watchlist_by_id(watchlist_id, request_options=request_options))
 
     async def get_watchlist_by_name(
         self, name: str, *, request_options: RequestOptionsOrDict | None = None
@@ -373,7 +372,7 @@ class AsyncWatchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (await self._with_raw_response.get_watchlist_by_name(name, request_options=request_options)).unwrap()
+        return unwrap(await self._with_raw_response.get_watchlist_by_name(name, request_options=request_options))
 
     async def get_watchlists(self, *, request_options: RequestOptionsOrDict | None = None) -> list[Watchlist]:
         """Returns the list of watchlists registered under the account.
@@ -387,7 +386,7 @@ class AsyncWatchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (await self._with_raw_response.get_watchlists(request_options=request_options)).unwrap()
+        return unwrap(await self._with_raw_response.get_watchlists(request_options=request_options))
 
     async def post_watchlist(
         self,
@@ -407,7 +406,7 @@ class AsyncWatchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (await self._with_raw_response.post_watchlist(body, request_options=request_options)).unwrap()
+        return unwrap(await self._with_raw_response.post_watchlist(body, request_options=request_options))
 
     async def remove_asset_from_watchlist(
         self, watchlist_id: UUID, symbol: str, *, request_options: RequestOptionsOrDict | None = None
@@ -425,11 +424,11 @@ class AsyncWatchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (
+        return unwrap(
             await self._with_raw_response.remove_asset_from_watchlist(
                 watchlist_id, symbol, request_options=request_options
-            )
-        ).unwrap()
+            ),
+        )
 
     async def update_watchlist_by_id(
         self,
@@ -451,11 +450,11 @@ class AsyncWatchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (
+        return unwrap(
             await self._with_raw_response.update_watchlist_by_id(
                 watchlist_id, body=body, request_options=request_options
-            )
-        ).unwrap()
+            ),
+        )
 
     async def update_watchlist_by_name(
         self,
@@ -477,9 +476,9 @@ class AsyncWatchlists:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (
+        return unwrap(
             await self._with_raw_response.update_watchlist_by_name(name, body=body, request_options=request_options)
-        ).unwrap()
+        )
 
     @property
     def with_raw_response(self) -> AsyncWatchlistsWithRawResponse:

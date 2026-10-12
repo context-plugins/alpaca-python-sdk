@@ -13,6 +13,7 @@ from ..core import (
     async_json_decoder,
     json_decoder,
     raw_error_response,
+    unwrap,
 )
 from ..models.clock import Clock
 from ..server.server import Server
@@ -37,7 +38,7 @@ class ClockApi:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.get_clock(request_options=request_options).unwrap()
+        return unwrap(self._with_raw_response.get_clock(request_options=request_options))
 
     @property
     def with_raw_response(self) -> ClockApiWithRawResponse:
@@ -63,7 +64,7 @@ class AsyncClockApi:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (await self._with_raw_response.get_clock(request_options=request_options)).unwrap()
+        return unwrap(await self._with_raw_response.get_clock(request_options=request_options))
 
     @property
     def with_raw_response(self) -> AsyncClockApiWithRawResponse:

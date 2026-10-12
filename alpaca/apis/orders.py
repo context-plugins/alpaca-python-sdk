@@ -19,6 +19,7 @@ from ..core import (
     json_decoder,
     param,
     raw_error_response,
+    unwrap,
 )
 from ..errors.delete_all_orders_error import DeleteAllOrdersErrorBody, delete_all_orders_error_mapper
 from ..errors.delete_order_by_order_id_error import DeleteOrderByOrderIdErrorBody, delete_order_by_order_id_error_mapper
@@ -49,7 +50,7 @@ class Orders:
 
         Raises:
             ApiError: Failed to cancel order. ``error`` is ``RawError``."""
-        return self._with_raw_response.delete_all_orders(request_options=request_options).unwrap()
+        return unwrap(self._with_raw_response.delete_all_orders(request_options=request_options))
 
     def delete_order_by_order_id(self, order_id: UUID, *, request_options: RequestOptionsOrDict | None = None) -> None:
         """Attempts to cancel an Open Order. If the order is no longer cancelable, the request will be rejected with
@@ -65,7 +66,7 @@ class Orders:
 
         Raises:
             ApiError: The order status is not cancelable. ``error`` is ``RawError``."""
-        return self._with_raw_response.delete_order_by_order_id(order_id, request_options=request_options).unwrap()
+        return unwrap(self._with_raw_response.delete_order_by_order_id(order_id, request_options=request_options))
 
     def get_all_orders(
         self,
@@ -98,16 +99,18 @@ class Orders:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.get_all_orders(
-            status=status,
-            limit=limit,
-            after=after,
-            until=until,
-            direction=direction,
-            nested=nested,
-            symbols=symbols,
-            request_options=request_options,
-        ).unwrap()
+        return unwrap(
+            self._with_raw_response.get_all_orders(
+                status=status,
+                limit=limit,
+                after=after,
+                until=until,
+                direction=direction,
+                nested=nested,
+                symbols=symbols,
+                request_options=request_options,
+            ),
+        )
 
     def get_order_by_order_id(
         self, order_id: UUID, *, nested: bool | None = None, request_options: RequestOptionsOrDict | None = None
@@ -125,9 +128,9 @@ class Orders:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.get_order_by_order_id(
-            order_id, nested=nested, request_options=request_options
-        ).unwrap()
+        return unwrap(
+            self._with_raw_response.get_order_by_order_id(order_id, nested=nested, request_options=request_options)
+        )
 
     def patch_order_by_order_id(
         self,
@@ -159,7 +162,7 @@ class Orders:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.patch_order_by_order_id(order_id, body, request_options=request_options).unwrap()
+        return unwrap(self._with_raw_response.patch_order_by_order_id(order_id, body, request_options=request_options))
 
     def post_order(self, body: Order | OrderDict, *, request_options: RequestOptionsOrDict | None = None) -> Order:
         """Places a new order for the given account. An order request may be rejected if the account is not authorized
@@ -176,7 +179,7 @@ class Orders:
         Raises:
             ApiError: Forbidden Buying power or shares is not sufficient. Unprocessable Input parameters are not
                 recognized. ``error`` is ``RawError``."""
-        return self._with_raw_response.post_order(body, request_options=request_options).unwrap()
+        return unwrap(self._with_raw_response.post_order(body, request_options=request_options))
 
     @property
     def with_raw_response(self) -> OrdersWithRawResponse:
@@ -203,7 +206,7 @@ class AsyncOrders:
 
         Raises:
             ApiError: Failed to cancel order. ``error`` is ``RawError``."""
-        return (await self._with_raw_response.delete_all_orders(request_options=request_options)).unwrap()
+        return unwrap(await self._with_raw_response.delete_all_orders(request_options=request_options))
 
     async def delete_order_by_order_id(
         self, order_id: UUID, *, request_options: RequestOptionsOrDict | None = None
@@ -221,9 +224,7 @@ class AsyncOrders:
 
         Raises:
             ApiError: The order status is not cancelable. ``error`` is ``RawError``."""
-        return (
-            await self._with_raw_response.delete_order_by_order_id(order_id, request_options=request_options)
-        ).unwrap()
+        return unwrap(await self._with_raw_response.delete_order_by_order_id(order_id, request_options=request_options))
 
     async def get_all_orders(
         self,
@@ -256,7 +257,7 @@ class AsyncOrders:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (
+        return unwrap(
             await self._with_raw_response.get_all_orders(
                 status=status,
                 limit=limit,
@@ -266,8 +267,8 @@ class AsyncOrders:
                 nested=nested,
                 symbols=symbols,
                 request_options=request_options,
-            )
-        ).unwrap()
+            ),
+        )
 
     async def get_order_by_order_id(
         self, order_id: UUID, *, nested: bool | None = None, request_options: RequestOptionsOrDict | None = None
@@ -285,11 +286,11 @@ class AsyncOrders:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (
+        return unwrap(
             await self._with_raw_response.get_order_by_order_id(
                 order_id, nested=nested, request_options=request_options
-            )
-        ).unwrap()
+            ),
+        )
 
     async def patch_order_by_order_id(
         self,
@@ -321,9 +322,9 @@ class AsyncOrders:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (
+        return unwrap(
             await self._with_raw_response.patch_order_by_order_id(order_id, body, request_options=request_options)
-        ).unwrap()
+        )
 
     async def post_order(
         self, body: Order | OrderDict, *, request_options: RequestOptionsOrDict | None = None
@@ -342,7 +343,7 @@ class AsyncOrders:
         Raises:
             ApiError: Forbidden Buying power or shares is not sufficient. Unprocessable Input parameters are not
                 recognized. ``error`` is ``RawError``."""
-        return (await self._with_raw_response.post_order(body, request_options=request_options)).unwrap()
+        return unwrap(await self._with_raw_response.post_order(body, request_options=request_options))
 
     @property
     def with_raw_response(self) -> AsyncOrdersWithRawResponse:

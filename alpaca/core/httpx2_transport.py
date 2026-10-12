@@ -116,7 +116,7 @@ def _is_at_start(reader: BinaryReader) -> bool:
 
     The raw-body peek has measured the whole extent in one release and the remainder in the next, so
     a handle already positioned mid-file stays chunked whichever answer the library gives (retiring
-    this guard is ADR-0065's deferred follow-up). ``tell`` is not part of the protocol and raises on
+    this guard is ADR-0067's deferred follow-up). ``tell`` is not part of the protocol and raises on
     a stream that is fd-backed but not seekable; either is the same answer as *cannot prove it*."""
     tell = getattr(reader, "tell", None)
     if tell is None:
@@ -138,7 +138,7 @@ def _sync_content(content: AsyncBinaryContent, stack: ExitStack) -> bytes | Bina
     A reader is handed on **only when the SDK can prove its size**, whatever the library's peek would
     answer: :func:`_reports_its_own_length` and :func:`_is_at_start` are the two halves of
     *provable*, and everything else is chunked. That keeps the framing the SDK's decision rather than
-    the peek's, whose answer has changed between releases (ADR-0065). Chunking is also what a reader
+    the peek's, whose answer has changed between releases (ADR-0067). Chunking is also what a reader
     carrying nothing but ``read`` needs, since the library's ``content=`` gate is
     ``isinstance(..., Iterable)`` and would refuse it outright.
 
@@ -586,7 +586,7 @@ def _default_ssl_context() -> ssl.SSLContext:
     """The trust a transport gets when ``verify`` is left at ``True``.
 
     ``SSL_CERT_FILE``, else ``SSL_CERT_DIR``, else certifi's bundle -- the order the SDK shipped with
-    before httpx2, which ends the same chain with ``truststore`` instead (ADR-0065). A plain
+    before httpx2, which ends the same chain with ``truststore`` instead (ADR-0067). A plain
     ``ssl.SSLContext`` also keeps anyio's TLS wrap on the event loop rather than a worker thread.
 
     Returns:
@@ -676,7 +676,7 @@ class Httpx2Client(HttpClient):
     behaviour the environment can change; a caller needing it off supplies a transport of their own.
 
     TLS trust *is* decided here: ``verify=True`` gets :func:`_default_ssl_context`, never httpx2's
-    own ``truststore`` default (ADR-0065). ``verify`` also takes an ``ssl.SSLContext``, used exactly
+    own ``truststore`` default (ADR-0067). ``verify`` also takes an ``ssl.SSLContext``, used exactly
     as given: a private CA bundle or a client certificate is configured by building one
     (``ssl.create_default_context(cafile=...)``). The one leg no context reaches is the TLS hop *to*
     an ``https://`` proxy, which the library verifies with its own default."""
@@ -738,7 +738,7 @@ class AsyncHttpx2Client(AsyncHttpClient):
     behaviour the environment can change; a caller needing it off supplies a transport of their own.
 
     TLS trust *is* decided here: ``verify=True`` gets :func:`_default_ssl_context`, never httpx2's
-    own ``truststore`` default (ADR-0065). ``verify`` also takes an ``ssl.SSLContext``, used exactly
+    own ``truststore`` default (ADR-0067). ``verify`` also takes an ``ssl.SSLContext``, used exactly
     as given: a private CA bundle or a client certificate is configured by building one
     (``ssl.create_default_context(cafile=...)``). The one leg no context reaches is the TLS hop *to*
     an ``https://`` proxy, which the library verifies with its own default."""

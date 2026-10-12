@@ -16,6 +16,7 @@ from ..core import (
     json_decoder,
     param,
     raw_error_response,
+    unwrap,
 )
 from ..errors.delete_all_open_positions_error import (
     DeleteAllOpenPositionsErrorBody,
@@ -48,9 +49,11 @@ class Positions:
 
         Raises:
             ApiError: Failed to liquidate ``error`` is ``RawError``."""
-        return self._with_raw_response.delete_all_open_positions(
-            cancel_orders=cancel_orders, request_options=request_options
-        ).unwrap()
+        return unwrap(
+            self._with_raw_response.delete_all_open_positions(
+                cancel_orders=cancel_orders, request_options=request_options
+            ),
+        )
 
     def delete_open_position(
         self,
@@ -76,9 +79,11 @@ class Positions:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.delete_open_position(
-            symbol_or_asset_id, qty=qty, percentage=percentage, request_options=request_options
-        ).unwrap()
+        return unwrap(
+            self._with_raw_response.delete_open_position(
+                symbol_or_asset_id, qty=qty, percentage=percentage, request_options=request_options
+            ),
+        )
 
     def get_all_open_positions(self, *, request_options: RequestOptionsOrDict | None = None) -> list[Position]:
         """The positions API provides information about an account’s current open positions. The response will include
@@ -96,7 +101,7 @@ class Positions:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.get_all_open_positions(request_options=request_options).unwrap()
+        return unwrap(self._with_raw_response.get_all_open_positions(request_options=request_options))
 
     def get_open_position(
         self, symbol_or_asset_id: str, *, request_options: RequestOptionsOrDict | None = None
@@ -113,7 +118,7 @@ class Positions:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return self._with_raw_response.get_open_position(symbol_or_asset_id, request_options=request_options).unwrap()
+        return unwrap(self._with_raw_response.get_open_position(symbol_or_asset_id, request_options=request_options))
 
     @property
     def with_raw_response(self) -> PositionsWithRawResponse:
@@ -141,11 +146,11 @@ class AsyncPositions:
 
         Raises:
             ApiError: Failed to liquidate ``error`` is ``RawError``."""
-        return (
+        return unwrap(
             await self._with_raw_response.delete_all_open_positions(
                 cancel_orders=cancel_orders, request_options=request_options
-            )
-        ).unwrap()
+            ),
+        )
 
     async def delete_open_position(
         self,
@@ -171,11 +176,11 @@ class AsyncPositions:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (
+        return unwrap(
             await self._with_raw_response.delete_open_position(
                 symbol_or_asset_id, qty=qty, percentage=percentage, request_options=request_options
-            )
-        ).unwrap()
+            ),
+        )
 
     async def get_all_open_positions(self, *, request_options: RequestOptionsOrDict | None = None) -> list[Position]:
         """The positions API provides information about an account’s current open positions. The response will include
@@ -193,7 +198,7 @@ class AsyncPositions:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (await self._with_raw_response.get_all_open_positions(request_options=request_options)).unwrap()
+        return unwrap(await self._with_raw_response.get_all_open_positions(request_options=request_options))
 
     async def get_open_position(
         self, symbol_or_asset_id: str, *, request_options: RequestOptionsOrDict | None = None
@@ -210,9 +215,9 @@ class AsyncPositions:
 
         Raises:
             ApiError: If the API responds with an error status code. ``error`` is ``RawError``."""
-        return (
+        return unwrap(
             await self._with_raw_response.get_open_position(symbol_or_asset_id, request_options=request_options)
-        ).unwrap()
+        )
 
     @property
     def with_raw_response(self) -> AsyncPositionsWithRawResponse:

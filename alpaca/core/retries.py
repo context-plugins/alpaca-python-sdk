@@ -19,6 +19,7 @@ from typing import Annotated, TypeAlias
 from pydantic import BaseModel, ConfigDict, Field
 from typing_extensions import NotRequired, TypedDict
 
+from ._internal.headers import find_header
 from .bodies import BinaryBody, FormBody, JsonBody, MultipartBody, MultipartFile, RequestBody, TextBody
 from .transport import HttpMethod
 
@@ -211,10 +212,9 @@ def retry_after_seconds(headers: Mapping[str, str], now: datetime) -> float | No
 
     Returns:
         Seconds to wait, never negative; ``None`` where the header is absent or unusable."""
-    value = next((field_value for name, field_value in headers.items() if name.lower() == "retry-after"), None)
-    if value is None:
+    token = find_header(headers, "Retry-After")
+    if token is None:
         return None
-    token = value.strip()
     # ``isdigit`` alone would take a non-ASCII digit; ``isascii`` fences the pair to ``[0-9]+``.
     if token.isascii() and token.isdigit():
         return float(token)
